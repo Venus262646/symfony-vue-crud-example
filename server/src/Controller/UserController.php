@@ -1,33 +1,33 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Movie;
-use App\Repository\MovieRepository;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class MovieController extends ApiController
+class UserController extends ApiController
 {
     /**
-    * @Route("/movies", methods="GET")
+    * @Route("/users", methods="GET")
     */
-    public function index(MovieRepository $movieRepository)
+    public function index(UserRepository $userRepository)
     {
         // if (! $this->isAuthorized()) {
         //     return $this->respondUnauthorized();
         // }
 
-        $movies = $movieRepository->transformAll();
+        $users = $userRepository->transformAll();
 
-        return $this->respond($movies);
+        return $this->respond($users);
     }
 
     /**
-    * @Route("/movies", methods="POST")
+    * @Route("/users", methods="POST")
     */
-    public function create(Request $request, MovieRepository $movieRepository, EntityManagerInterface $em)
+    public function create(Request $request, UserRepository $userRepository, EntityManagerInterface $em)
     {
         if (! $this->isAuthorized()) {
             return $this->respondUnauthorized();
@@ -43,37 +43,37 @@ class MovieController extends ApiController
             return $this->respondValidationError('Please provide a title!');
         }
 
-        // persist the new movie
-        $movie = new Movie;
-        $movie->setTitle($request->get('title'));
-        $movie->setCount(0);
-        $em->persist($movie);
+        // persist the new user
+        $user = new User;
+        $user->setTitle($request->get('title'));
+        $user->setCount(0);
+        $em->persist($user);
         $em->flush();
 
-        return $this->respondCreated($movieRepository->transform($movie));
+        return $this->respondCreated($userRepository->transform($user));
     }
 
     /**
-    * @Route("/movies/{id}/count", methods="POST")
+    * @Route("/users/{id}/count", methods="POST")
     */
-    public function increaseCount($id, EntityManagerInterface $em, MovieRepository $movieRepository)
+    public function increaseCount($id, EntityManagerInterface $em, UserRepository $userRepository)
     {
         if (! $this->isAuthorized()) {
             return $this->respondUnauthorized();
         }
 
-        $movie = $movieRepository->find($id);
+        $user = $userRepository->find($id);
 
-        if (! $movie) {
+        if (! $user) {
             return $this->respondNotFound();
         }
 
-        $movie->setCount($movie->getCount() + 1);
-        $em->persist($movie);
+        $user->setCount($user->getCount() + 1);
+        $em->persist($user);
         $em->flush();
 
         return $this->respond([
-            'count' => $movie->getCount()
+            'count' => $user->getCount()
         ]);
     }
 

@@ -48,7 +48,7 @@ export default {
     async created () {
         // axios.defaults.headers.common['Authorization'] = `Bearer ${await this.$auth.getAccessToken()}`
         try {
-            // const response = await axios.get('http://127.0.0.1:8000/movies')
+            // const response = await axios.get('http://127.0.0.1:8000/users')
             // this.movies = response.data
             this.isLoading = false
         } catch(e) {
