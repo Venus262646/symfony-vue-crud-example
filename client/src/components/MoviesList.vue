@@ -40,7 +40,7 @@ export default {
     },
     data() {
         return {
-            movies: {},
+            movies: [{id: 1, title: "title1", count: "count1"}, {id: 1, title: "title1", count: "count1"}, {id: 1, title: "title1", count: "count1"}, {id: 1, title: "title1", count: "count1"}, {id: 1, title: "title1", count: "count1"}],
             isLoading: true,
             countUpdatingTable: []
         }
@@ -48,8 +48,8 @@ export default {
     async created () {
         // axios.defaults.headers.common['Authorization'] = `Bearer ${await this.$auth.getAccessToken()}`
         try {
-            const response = await axios.get('http://127.0.0.1:8000/movies')
-            this.movies = response.data
+            // const response = await axios.get('http://127.0.0.1:8000/movies')
+            // this.movies = response.data
             this.isLoading = false
         } catch(e) {
             // handle authentication error here
